@@ -7,7 +7,7 @@ import streamlit as st
 
 
 def cropped_image_v2(img):
-    face_cascade = cv2.CascadeClassifier(r"..\Model\opencv\haarcascades\haarcascade_frontalface_default.xml")
+    face_cascade = cv2.CascadeClassifier(r"./opencv/haarcascades/haarcascade_frontalface_default.xml")
     if isinstance(img , np.ndarray):
         gray = cv2.cvtColor(img , cv2.COLOR_RGB2GRAY)
         faces = face_cascade.detectMultiScale(gray, 1.3, 5)
@@ -43,17 +43,20 @@ def w2d(img, mode='haar', level=1):
 
 def test_img_prepration(image):
     roi = cropped_image_v2(image)
-    scalled_raw_img = cv2.resize(roi, (32, 32))
-    img_har = w2d(roi,'db1',5)
-    scalled_img_har = cv2.resize(img_har, (32, 32))
-    combined_img = np.vstack((scalled_raw_img.reshape(32*32*3,1),scalled_img_har.reshape(32*32,1)))
-    
-    return combined_img
+    if roi is not None:
+        scalled_raw_img = cv2.resize(roi, (32, 32))
+        img_har = w2d(roi,'db1',5)
+        scalled_img_har = cv2.resize(img_har, (32, 32))
+        combined_img = np.vstack((scalled_raw_img.reshape(32*32*3,1),scalled_img_har.reshape(32*32,1)))
+        
+        return combined_img
     
 
 
 def make_prediction(img , model):
-	roi = test_img_prepration(img)
-	
-	return model.predict(roi.T)[0]
-	
+    roi = test_img_prepration(img)
+    if roi is not None:
+        return (model.predict(roi.T)[0], model.predict_proba(roi.T))
+        
+    else:
+        return 0, None
