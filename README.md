@@ -10,3 +10,19 @@
 * By doing _**Error analysis**_, _**F-1 score**_ was found low for those persons which have _**low variety of images and contains noise in the images**_, model was giving false predictions sometimes for _**similar looking persons**_ like Sadhguru and Osho. 
 * Build an interactive _**Web app**_  using _**streamlit.**_  
 * Web app was deployed to _**production**_ using _**heroku.**_ 
+
+
+### Steps to run the project Locally
+1. clone the repository by downloading zip file or run
+```git clone https://github.com/Nihal72/ImageClassification.git```
+2. Create a virtual environment in Python 
+```python -m virtualenv venv```
+3. Activate the virtual environment 
+```venv/Scripts/activate```
+4. go to Server directory 
+```cd ./ImageClassification/Spirtual_gurus_classification_v3/Server/```
+5. Install the required libraries in requirements.txt 
+```pip install -r requirements.txt```
+6. Run the streamlit app 
+```streamlit run app.py```
+7. voila! enjoy. 🥳
